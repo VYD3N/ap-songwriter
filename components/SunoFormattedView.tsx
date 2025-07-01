@@ -1,34 +1,41 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import { SunoSong } from '../types';
+import { SunoSong, SunoVersion } from '../types';
 import { CopyIcon, CheckIcon } from './Icon';
 
 interface SunoFormattedViewProps {
   songData: SunoSong;
+  sunoVersion: SunoVersion;
 }
 
-const SunoFormattedView: React.FC<SunoFormattedViewProps> = ({ songData }) => {
+const SunoFormattedView: React.FC<SunoFormattedViewProps> = ({ songData, sunoVersion }) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const formattedText = useMemo(() => {
     const { metadata, sections } = songData;
     let output = '';
     
-    const formatKey = (key: string) => key.toUpperCase().replace(/_/g, ' ');
-    const formatValue = (value: any) => Array.isArray(value) ? value.join(', ') : value;
-    
-    const keysToExclude = ['song_name', 'album_name', 'artist', 'style_description', 'exclude_style'];
+    if (sunoVersion === 'v3-4') {
+        const formatKey = (key: string) => key.toUpperCase().replace(/_/g, ' ');
+        const formatValue = (value: any) => Array.isArray(value) ? value.join(', ') : value;
+        
+        const keysToExclude = ['song_name', 'album_name', 'artist', 'style_description', 'exclude_style'];
 
-    for (const [key, value] of Object.entries(metadata)) {
-      if(value && !keysToExclude.includes(key)){
-          output += `[${formatKey(key)}: ${formatValue(value)}]\n`;
-      }
+        for (const [key, value] of Object.entries(metadata)) {
+          if(value && !keysToExclude.includes(key)){
+              output += `[${formatKey(key)}: ${formatValue(value)}]\n`;
+          }
+        }
+        output += '\n';
     }
-
-    output += '\n';
 
     for (const section of sections) {
       output += `[${section.title.toUpperCase()}]\n`;
-      output += `(${section.musicalCue})\n`;
+      if (sunoVersion === 'v3-4') {
+        output += `[${section.musicalCue}]\n`;
+      } else {
+        output += `(${section.musicalCue})\n`;
+      }
+
       if (section.lyrics && section.lyrics.length > 0) {
         output += section.lyrics.join('\n') + '\n';
       }
@@ -38,7 +45,7 @@ const SunoFormattedView: React.FC<SunoFormattedViewProps> = ({ songData }) => {
     output += '[END]';
 
     return output.trim();
-  }, [songData]);
+  }, [songData, sunoVersion]);
 
   const handleCopy = useCallback(() => {
     if (formattedText) {

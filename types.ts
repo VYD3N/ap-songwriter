@@ -1,5 +1,6 @@
 
 export type AutogenField = 'genre' | 'mood' | 'theme' | 'lyricPrompt' | 'instrument';
+export type SunoVersion = 'v4.5' | 'v3-4';
 
 export interface FormInput {
   genre: string;

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { SunoSong } from '../types';
+import { SunoSong, SunoVersion } from '../types';
 import Loader from './Loader';
 import SunoFormattedView from './SunoFormattedView';
 import { SparkleIcon, RefreshIcon } from './Icon';
 import CopyableField from './CopyableField';
+import SunoVersionToggle from './SunoVersionToggle';
 
 interface OutputDisplayProps {
   songData: SunoSong | null;
@@ -11,9 +12,11 @@ interface OutputDisplayProps {
   error: string | null;
   onLyricReroll: (notes: string) => void;
   isRerolling: boolean;
+  sunoVersion: SunoVersion;
+  setSunoVersion: React.Dispatch<React.SetStateAction<SunoVersion>>;
 }
 
-const OutputDisplay: React.FC<OutputDisplayProps> = ({ songData, isLoading, error, onLyricReroll, isRerolling }) => {
+const OutputDisplay: React.FC<OutputDisplayProps> = ({ songData, isLoading, error, onLyricReroll, isRerolling, sunoVersion, setSunoVersion }) => {
   const [isRerollVisible, setRerollVisible] = useState(false);
   const [rerollNotes, setRerollNotes] = useState('');
 
@@ -32,6 +35,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ songData, isLoading, erro
     if (songData) {
       return (
         <div className="space-y-4">
+          <SunoVersionToggle currentVersion={sunoVersion} onVersionChange={setSunoVersion} />
           <div>
             <h3 className="text-base font-bold text-acid-black mb-2">Suno Inputs</h3>
             <div className="space-y-2">
@@ -80,7 +84,7 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ songData, isLoading, erro
 
                 {isRerolling && !isLoading && <div className="py-8"><Loader/></div>}
                 
-                {(!isRerolling || isLoading) && <SunoFormattedView songData={songData} />}
+                {(!isRerolling || isLoading) && <SunoFormattedView songData={songData} sunoVersion={sunoVersion} />}
              </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { FormInput, SunoSong, AutogenField } from './types';
+import { FormInput, SunoSong, AutogenField, SunoVersion } from './types';
 import { generateSongPrompt, regenerateLyrics, generateFieldSuggestion } from './services/geminiService';
 import Header from './components/Header';
 import InputForm from './components/InputForm';
@@ -20,6 +20,7 @@ const App: React.FC = () => {
   const [isRerolling, setIsRerolling] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [generatingField, setGeneratingField] = useState<AutogenField | null>(null);
+  const [sunoVersion, setSunoVersion] = useState<SunoVersion>('v4.5');
 
 
   const handleSubmit = useCallback(async () => {
@@ -91,6 +92,8 @@ const App: React.FC = () => {
                     error={error}
                     onLyricReroll={handleLyricReroll}
                     isRerolling={isRerolling}
+                    sunoVersion={sunoVersion}
+                    setSunoVersion={setSunoVersion}
                 />
                 </div>
             </main>
