@@ -1,0 +1,5 @@
+{
+  "name": "AP Songwriter",
+  "description": "An AI-powered application to generate detailed song prompts in Suno format from simple user inputs. It transforms genre, mood, theme, and instrumentation into structured JSON and a human-readable format.",
+  "requestFramePermissions": []
+}

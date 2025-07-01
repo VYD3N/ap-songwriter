@@ -1,0 +1,71 @@
+import React, { useMemo, useState, useCallback } from 'react';
+import { SunoSong } from '../types';
+import { CopyIcon, CheckIcon } from './Icon';
+
+interface SunoFormattedViewProps {
+  songData: SunoSong;
+}
+
+const SunoFormattedView: React.FC<SunoFormattedViewProps> = ({ songData }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const formattedText = useMemo(() => {
+    const { metadata, sections } = songData;
+    let output = '';
+    
+    const formatKey = (key: string) => key.toUpperCase().replace(/_/g, ' ');
+    const formatValue = (value: any) => Array.isArray(value) ? value.join(', ') : value;
+    
+    const keysToExclude = ['song_name', 'album_name', 'artist', 'style_description', 'exclude_style'];
+
+    for (const [key, value] of Object.entries(metadata)) {
+      if(value && !keysToExclude.includes(key)){
+          output += `[${formatKey(key)}: ${formatValue(value)}]\n`;
+      }
+    }
+
+    output += '\n';
+
+    for (const section of sections) {
+      output += `[${section.title.toUpperCase()}]\n`;
+      output += `(${section.musicalCue})\n`;
+      if (section.lyrics && section.lyrics.length > 0) {
+        output += section.lyrics.join('\n') + '\n';
+      }
+      output += '\n';
+    }
+
+    output += '[END]';
+
+    return output.trim();
+  }, [songData]);
+
+  const handleCopy = useCallback(() => {
+    if (formattedText) {
+      navigator.clipboard.writeText(formattedText);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    }
+  }, [formattedText]);
+
+  return (
+    <div className="relative">
+      <button
+        onClick={handleCopy}
+        className="absolute top-2 right-2 z-10 p-2 border-2 border-acid-black bg-acid-gray active:shadow-inset shadow-outset"
+        aria-label="Copy Suno lyrics field"
+      >
+        {isCopied ? (
+          <CheckIcon className="w-4 h-4 text-acid-black" />
+        ) : (
+          <CopyIcon className="w-4 h-4 text-acid-black" />
+        )}
+      </button>
+      <div className="bg-acid-white p-4 border-2 border-acid-black text-xs text-acid-black whitespace-pre-wrap break-words leading-relaxed max-h-[55vh] overflow-y-auto pr-12">
+        {formattedText}
+      </div>
+    </div>
+  );
+};
+
+export default SunoFormattedView;
