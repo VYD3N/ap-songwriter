@@ -93,7 +93,9 @@ const SliderField: React.FC<{
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   minLabel: string;
   maxLabel: string;
-}> = ({ id, label, value, onChange, minLabel, maxLabel }) => (
+  min?: number;
+  max?: number;
+}> = ({ id, label, value, onChange, minLabel, maxLabel, min, max }) => (
   <div>
     <label htmlFor={id} className="block text-sm font-medium text-acid-black mb-1">
       {label}
@@ -102,8 +104,8 @@ const SliderField: React.FC<{
       type="range"
       id={id}
       name={id}
-      min="0"
-      max="100"
+      min={min}
+      max={max}
       value={value}
       onChange={onChange}
       className="w-full h-2 bg-acid-gray appearance-none cursor-pointer accent-acid-pink border-2 border-acid-black"
@@ -193,6 +195,16 @@ const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onSubmit, 
           onChange={handleChange}
           minLabel="Rhyming"
           maxLabel="No Rhyming"
+        />
+        <SliderField
+          id="lyricWordLimit"
+          label="Lyric Word Limit"
+          value={formData.lyricWordLimit}
+          onChange={handleChange}
+          minLabel="No Lyrics"
+          maxLabel="Full Lyrics"
+          min={0}
+          max={50}
         />
         <AutogenInputField
           id="instrument"

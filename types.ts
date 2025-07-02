@@ -9,6 +9,7 @@ export interface FormInput {
   instrument: string;
   lyricStyle: number;
   rhymeStyle: number;
+  lyricWordLimit: number;
   excludeLyrics: string;
 }
 

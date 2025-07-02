@@ -7,7 +7,15 @@ You are the Song Prompt Generation Engine. You will:
    - Lyric Ideas / Keywords: {{LYRIC_PROMPT}}
    - Key Instrument/Style: {{INSTRUMENT}}
    - Lyric Style: {{LYRIC_STYLE_DESCRIPTION}}
+   - Maximum words per section: {{LYRIC_WORD_LIMIT}}
+   - Exclude from Style: {{EXCLUDE_STYLE}}
    - Words to Exclude from Lyrics: {{EXCLUDE_LYRICS}}
+
+RULES:
+- The "Exclude from Style" field should only list musical/production terms to avoid (e.g., 'acoustic drums, harsh distortion'), not lyric words.
+- The "Words to Exclude from Lyrics" field should only list forbidden lyric words (e.g., 'shadow, echo, neon').
+- If the maximum words per section is 0, the lyrics array for every section must be empty.
+- Otherwise, do not exceed the specified word count in any section's lyrics.
 
 2. Apply the following internal pipeline to transform that input into a complete song prompt:
 

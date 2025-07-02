@@ -32,6 +32,7 @@ const App: React.FC = () => {
     instrument: 'Driving 80s synth bassline',
     lyricStyle: 50,
     rhymeStyle: 0, // default to fully rhyming
+    lyricWordLimit: 50, // default to full lyrics
     excludeLyrics: 'shadow, shadows, echo, echoes, whisper, whispers, hum, cosmic, kaleidoscopic, tapestry, neon, fractal, ',
   });
   const [songData, setSongData] = useState<SunoSong | null>(null);
@@ -52,6 +53,7 @@ const App: React.FC = () => {
       ...formData,
       lyricStyle: getLyricStyleDescription(formData.lyricStyle),
       rhymeStyle: getRhymeStyleDescription(formData.rhymeStyle),
+      lyricWordLimit: formData.lyricWordLimit,
     };
 
     try {
@@ -75,6 +77,7 @@ const App: React.FC = () => {
       ...formData,
       lyricStyle: getLyricStyleDescription(formData.lyricStyle),
       rhymeStyle: getRhymeStyleDescription(formData.rhymeStyle),
+      lyricWordLimit: formData.lyricWordLimit,
     };
 
     try {
