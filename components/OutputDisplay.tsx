@@ -41,11 +41,11 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ songData, isLoading, erro
             <div className="space-y-2">
                 <CopyableField 
                 label="Style Description" 
-                value={songData.metadata.style_description || "Not generated"} 
+                value={songData.metadata?.style_description || "Not generated"} 
                 />
                 <CopyableField 
                 label="Exclude from Style" 
-                value={songData.metadata.exclude_style || "Not generated"} 
+                value={songData.metadata?.exclude_style || "Not generated"} 
                 />
             </div>
           </div>

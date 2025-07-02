@@ -1,4 +1,3 @@
-
 export type AutogenField = 'genre' | 'mood' | 'theme' | 'lyricPrompt' | 'instrument';
 export type SunoVersion = 'v4.5' | 'v3-4';
 
@@ -9,6 +8,7 @@ export interface FormInput {
   lyricPrompt: string;
   instrument: string;
   lyricStyle: number;
+  rhymeStyle: number;
   excludeLyrics: string;
 }
 

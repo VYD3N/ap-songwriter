@@ -29,7 +29,7 @@ The application features a unique, retro-themed UI inspired by '90s operating sy
 ## 3. Tech Stack
 
 -   **Frontend**: React (v19) with TypeScript
--   **AI Engine**: Google Gemini API (`@google/genai`)
+-   **AI Engine**: OpenAI API (`openai`) with GPT-4o-mini model
 -   **Styling**: Tailwind CSS (JIT CDN) with a custom theme configured in `index.html`.
 -   **Fonts**: Google Fonts (`Press Start 2P`)
 -   **Module Loading**: The application uses ES Modules loaded directly from `esm.sh` via an `importmap` in `index.html`. This means there is no local `node_modules` folder or traditional build step (like Webpack or Vite) required to run the application.
@@ -52,7 +52,8 @@ The project is organized into a `components` directory for UI elements and sever
 │   └── SunoFormattedView.tsx # Renders the final Suno-formatted text block.
 │
 ├── services/
-│   └── geminiService.ts    # Handles all API calls to the Google Gemini AI.
+│   ├── geminiService.ts    # Legacy Gemini service (deprecated)
+│   └── openaiService.ts    # Handles all API calls to the OpenAI API.
 │
 ├── App.tsx                 # The main application component, manages state and logic.
 ├── constants.ts            # Contains all the master prompts for the Gemini AI.
@@ -75,12 +76,12 @@ Place all the files from this project (`index.html`, `App.tsx`, `components/`, e
 
 ### Step 2: Configure the API Key (Crucial)
 
-The application requires a Google Gemini API key to function. This key **must** be provided in a `.env` file at the project root.
+The application requires an OpenAI API key to function. This key **must** be provided in a `.env` file at the project root.
 
-- **Variable Name:** `GEMINI_API_KEY`
+- **Variable Name:** `OPENAI_API_KEY`
 - **Example `.env.example` file:**
   ```
-  GEMINI_API_KEY=your_actual_key_here
+  OPENAI_API_KEY=your_actual_key_here
   ```
 
 The application code will access this as `process.env.API_KEY` (mapped by Vite).
@@ -98,7 +99,7 @@ To run the app locally:
 
 1. Clone this repository.
 2. Run `npm install` to install dependencies.
-3. Copy `.env.example` to `.env` and add your Gemini API key:
+3. Copy `.env.example` to `.env` and add your OpenAI API key:
    ```
    cp .env.example .env
    # Then edit .env to add your actual key

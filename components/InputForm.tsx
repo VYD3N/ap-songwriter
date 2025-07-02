@@ -186,6 +186,14 @@ const InputForm: React.FC<InputFormProps> = ({ formData, setFormData, onSubmit, 
           minLabel="Structured"
           maxLabel="Abstract"
         />
+        <SliderField
+          id="rhymeStyle"
+          label="Rhyme Style"
+          value={formData.rhymeStyle}
+          onChange={handleChange}
+          minLabel="Rhyming"
+          maxLabel="No Rhyming"
+        />
         <AutogenInputField
           id="instrument"
           label="Instrument/Style"

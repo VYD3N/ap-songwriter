@@ -1,4 +1,3 @@
-
 export const MASTER_PROMPT = `
 You are the Song Prompt Generation Engine. You will:
 1. Take the user's minimal song input, which includes the following fields:
@@ -102,7 +101,7 @@ You are the Song Prompt Generation Engine. You will:
 3. Return ONLY the final, valid JSON in the format shown above—no extra commentary, text, or markdown fences.
 4. Ensure the JSON is syntactically valid and includes at least 3 sections (e.g., Intro, Verse, Chorus).
 5. If lyrics are included, keep them short and relevant to the theme and lyric ideas, while strictly adhering to the exclusion list.
-6. Incorporate the user’s theme, mood, and instrumentation throughout your details, ensuring consistent references in each section.
+6. Incorporate the user's theme, mood, and instrumentation throughout your details, ensuring consistent references in each section.
 `;
 
 export const LYRIC_REROLL_PROMPT = `
@@ -117,6 +116,7 @@ Your task is to regenerate ONLY the lyrics for the song.
 4.  You MUST adhere to the original lyric exclusion list: {{EXCLUDE_LYRICS}}. Do not use these words under any circumstances.
 5.  The new lyrics should still align with the song's overall theme and mood found in the metadata.
 6.  Return the entire song object as a single, valid JSON object, with only the lyrics changed. Do not include any other text or markdown fences.
+7.  If the input contains a 'metadata' field, your output MUST also contain it, unchanged.
 
 **USER'S NOTES FOR RE-ROLL:**
 {{REROLL_NOTES}}

@@ -12,6 +12,9 @@ const SunoFormattedView: React.FC<SunoFormattedViewProps> = ({ songData, sunoVer
 
   const formattedText = useMemo(() => {
     const { metadata, sections } = songData;
+    if (!Array.isArray(sections) || sections.length === 0) {
+      return '[No sections available. The AI response may have been malformed.]';
+    }
     let output = '';
     
     if (sunoVersion === 'v3-4') {
